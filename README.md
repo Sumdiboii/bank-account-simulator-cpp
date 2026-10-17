@@ -97,7 +97,15 @@ Validation lives in exactly one place. The input helpers let zero and negative a
 
 ---
 
+## 🧭 Architecture
+
+<p align="center">
+  <img src="docs/architecture.svg" alt="Bank Account Simulator system architecture" width="900" />
+</p>
+
 <br>
+
+---
 
 ## ⚙️ Getting Started
 
