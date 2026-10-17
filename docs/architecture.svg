@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>Bank Account Simulator system architecture</title>
+  <desc>A user interacts with main.cpp (presentation layer), which calls the BankAccount class (domain layer). BankAccount throws exceptions that main.cpp catches and prints.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#C0392B"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="750" rx="16" fill="#F7FAF8"/>
+
+  <!-- Title -->
+  <text x="600" y="52" text-anchor="middle" font-size="28" font-weight="700" fill="#1F2937">Bank Account Simulator: System Architecture</text>
+  <text x="600" y="80" text-anchor="middle" font-size="15" fill="#6B7280">Presentation and domain logic are fully separated, so the class knows nothing about the console</text>
+
+  <!-- ============ USER ============ -->
+  <rect x="40" y="240" width="180" height="170" rx="12" fill="#FFF8E6" stroke="#B7791F" stroke-width="2"/>
+  <text x="130" y="295" text-anchor="middle" font-size="20" font-weight="700" fill="#1F2937">User</text>
+  <text x="130" y="322" text-anchor="middle" font-size="14" fill="#374151">Terminal</text>
+  <text x="130" y="344" text-anchor="middle" font-size="13" fill="#6B7280">keyboard and console</text>
+
+  <!-- User <-> main arrows -->
+  <line x1="222" y1="300" x2="288" y2="300" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="255" y="291" text-anchor="middle" font-size="12" fill="#374151">stdin</text>
+  <line x1="288" y1="360" x2="222" y2="360" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="255" y="380" text-anchor="middle" font-size="12" fill="#374151">stdout</text>
+
+  <!-- ============ main.cpp ============ -->
+  <rect x="290" y="110" width="400" height="545" rx="14" fill="#EAF5EE" stroke="#1B7A43" stroke-width="2.5"/>
+  <text x="490" y="146" text-anchor="middle" font-size="21" font-weight="700" fill="#1B7A43">main.cpp</text>
+  <text x="490" y="170" text-anchor="middle" font-size="13.5" fill="#374151">Presentation layer: input and output only, no rules</text>
+
+  <!-- main() -->
+  <rect x="320" y="200" width="360" height="100" rx="10" fill="#FFFFFF" stroke="#1B7A43" stroke-width="1.5"/>
+  <text x="500" y="228" text-anchor="middle" font-size="16" font-weight="700" fill="#1F2937">main(): menu loop</text>
+  <text x="500" y="252" text-anchor="middle" font-size="13" fill="#374151">switch dispatch on the user's choice</text>
+  <text x="500" y="276" text-anchor="middle" font-size="12.5" font-family="Consolas, Menlo, monospace" fill="#1B7A43">1 Deposit  2 Withdraw  3 Balance  4 Exit</text>
+
+  <!-- Input helpers -->
+  <rect x="320" y="320" width="360" height="115" rx="10" fill="#FFFFFF" stroke="#1B7A43" stroke-width="1.5"/>
+  <text x="500" y="346" text-anchor="middle" font-size="16" font-weight="700" fill="#1F2937">Input helpers</text>
+  <text x="500" y="370" text-anchor="middle" font-size="12.5" font-family="Consolas, Menlo, monospace" fill="#1B7A43">promptForChoice()</text>
+  <text x="500" y="389" text-anchor="middle" font-size="12.5" font-family="Consolas, Menlo, monospace" fill="#1B7A43">promptForAmountCents()</text>
+  <text x="500" y="420" text-anchor="middle" font-size="12.5" fill="#374151">Rejects bad text, handles end of input</text>
+
+  <!-- formatMoney -->
+  <rect x="320" y="455" width="360" height="60" rx="10" fill="#FFFFFF" stroke="#1B7A43" stroke-width="1.5"/>
+  <text x="500" y="481" text-anchor="middle" font-size="16" font-weight="700" fill="#1F2937">formatMoney()</text>
+  <text x="500" y="502" text-anchor="middle" font-size="12.5" fill="#374151">Turns 1005 cents into $10.05</text>
+
+  <!-- try / catch -->
+  <rect x="320" y="535" width="360" height="90" rx="10" fill="#FFFFFF" stroke="#C0392B" stroke-width="1.5"/>
+  <text x="500" y="562" text-anchor="middle" font-size="16" font-weight="700" fill="#1F2937">try / catch (std::exception)</text>
+  <text x="500" y="586" text-anchor="middle" font-size="12.5" fill="#374151">Prints "Error: ..." and keeps the loop alive</text>
+  <text x="500" y="606" text-anchor="middle" font-size="12.5" fill="#374151">The program never crashes on bad input</text>
+
+  <!-- ============ main -> BankAccount arrows ============ -->
+  <text x="747" y="208" text-anchor="middle" font-size="12" fill="#374151">deposit()</text>
+  <text x="747" y="223" text-anchor="middle" font-size="12" fill="#374151">withdraw()</text>
+  <line x1="682" y1="236" x2="813" y2="236" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <line x1="813" y1="280" x2="682" y2="280" stroke="#374151" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="747" y="298" text-anchor="middle" font-size="12" fill="#374151">balanceCents()</text>
+
+  <!-- Exception flow (red, dashed) -->
+  <line x1="813" y1="580" x2="682" y2="580" stroke="#C0392B" stroke-width="2.2" stroke-dasharray="7 5" marker-end="url(#arrowRed)"/>
+  <text x="747" y="568" text-anchor="middle" font-size="12" font-weight="600" fill="#C0392B">throws</text>
+  <text x="747" y="600" text-anchor="middle" font-size="11" fill="#C0392B">invalid_argument</text>
+  <text x="747" y="615" text-anchor="middle" font-size="11" fill="#C0392B">runtime_error</text>
+
+  <!-- ============ BankAccount ============ -->
+  <rect x="800" y="110" width="360" height="545" rx="14" fill="#EEF1F8" stroke="#2F4A8A" stroke-width="2.5"/>
+  <text x="980" y="146" text-anchor="middle" font-size="21" font-weight="700" fill="#2F4A8A">BankAccount.h / .cpp</text>
+  <text x="980" y="170" text-anchor="middle" font-size="13.5" fill="#374151">Domain layer: owns the rules and the state</text>
+
+  <!-- Public interface -->
+  <rect x="815" y="200" width="330" height="150" rx="10" fill="#FFFFFF" stroke="#2F4A8A" stroke-width="1.5"/>
+  <text x="980" y="228" text-anchor="middle" font-size="16" font-weight="700" fill="#1F2937">Public interface</text>
+  <text x="980" y="256" text-anchor="middle" font-size="12.5" font-family="Consolas, Menlo, monospace" fill="#2F4A8A">BankAccount(owner, opening)</text>
+  <text x="980" y="278" text-anchor="middle" font-size="12.5" font-family="Consolas, Menlo, monospace" fill="#2F4A8A">deposit(amountCents)</text>
+  <text x="980" y="300" text-anchor="middle" font-size="12.5" font-family="Consolas, Menlo, monospace" fill="#2F4A8A">withdraw(amountCents)</text>
+  <text x="980" y="322" text-anchor="middle" font-size="12.5" font-family="Consolas, Menlo, monospace" fill="#2F4A8A">balanceCents()  owner()</text>
+
+  <!-- Private state -->
+  <rect x="815" y="370" width="330" height="90" rx="10" fill="#FFFFFF" stroke="#2F4A8A" stroke-width="1.5" stroke-dasharray="2 0"/>
+  <text x="980" y="398" text-anchor="middle" font-size="16" font-weight="700" fill="#1F2937">Private state</text>
+  <text x="980" y="422" text-anchor="middle" font-size="12.5" font-family="Consolas, Menlo, monospace" fill="#2F4A8A">owner_ : std::string</text>
+  <text x="980" y="442" text-anchor="middle" font-size="12.5" font-family="Consolas, Menlo, monospace" fill="#2F4A8A">balanceCents_ : long long</text>
+
+  <!-- Validation rules -->
+  <rect x="815" y="480" width="330" height="145" rx="10" fill="#FFFFFF" stroke="#C0392B" stroke-width="1.5"/>
+  <text x="980" y="508" text-anchor="middle" font-size="16" font-weight="700" fill="#1F2937">Validation rules</text>
+  <text x="980" y="535" text-anchor="middle" font-size="12.5" fill="#374151">Owner name cannot be empty</text>
+  <text x="980" y="558" text-anchor="middle" font-size="12.5" fill="#374151">Amounts must be greater than zero</text>
+  <text x="980" y="581" text-anchor="middle" font-size="12.5" fill="#374151">Withdrawal cannot exceed the balance</text>
+  <text x="980" y="604" text-anchor="middle" font-size="12.5" font-weight="600" fill="#C0392B">Balance can never go negative</text>
+
+  <!-- ============ Legend ============ -->
+  <rect x="290" y="685" width="22" height="14" rx="3" fill="#EAF5EE" stroke="#1B7A43" stroke-width="2"/>
+  <text x="320" y="697" font-size="13" fill="#374151">Presentation layer</text>
+
+  <rect x="470" y="685" width="22" height="14" rx="3" fill="#EEF1F8" stroke="#2F4A8A" stroke-width="2"/>
+  <text x="500" y="697" font-size="13" fill="#374151">Domain layer</text>
+
+  <line x1="620" y1="692" x2="652" y2="692" stroke="#C0392B" stroke-width="2.2" stroke-dasharray="7 5"/>
+  <text x="662" y="697" font-size="13" fill="#374151">Exception flow</text>
+
+  <text x="600" y="730" text-anchor="middle" font-size="13" fill="#6B7280">All money is stored as whole cents (long long) to avoid floating point rounding errors</text>
+</svg>
